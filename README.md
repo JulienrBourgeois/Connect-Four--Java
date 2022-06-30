@@ -1,0 +1,2 @@
+# Connect-Four--Java
+This project was my second every project after UNO. I completed this project during my sophomore year at the end of my AP CSA java course. This app consists of a text- based connect four that allows the user to input X's and O's while playing against the computer. Although this project was not much of a difficult task, it was a good little program to create after learning my first pieces of java. 
