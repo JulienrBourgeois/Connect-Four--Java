@@ -11,6 +11,6 @@ To start off my program, I had the user enter their name. After that, the progra
 
 After every turn, I called checkVertical, checkHorizontal and checkDiagonals to see if a player had won the game. The checkVertical and checkHorizontal consisted in my iterating through a 2D array and just switching the nested loops to resemble different search methods. I then checked for 4 streaks of the same piece within this iteration to check for a win. The diagonals were a bit tricky. I realized that there were several different diagonals to check on the board. I also realized that the dimensions of the board were constant. So I just made a method that checked each diagonal, one by one. If at any time a streak had been found, we would break the execution and reveal the winner!
 
-Overall, connect four was a neat little project. I definetly could have gone bigger, but I wanted to get finished with Java and pursure further passions in Unity and XCode programming! 
+Overall, connect four was a neat little project. Looking back at it, I can definetly tell this app was made during my "Bad variable name phase" as all of my variable names were random letters that I can't even understand anymore 😂. Again, it is awesome to see my growth as a programmer over the months and years! I definetly could have gone bigger, but I wanted to get finished with Java and pursure further passions in Unity and XCode programming! 
 
 
