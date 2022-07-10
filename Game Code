@@ -1,0 +1,603 @@
+public class connectFour extends ConsoleProgram
+{
+    
+    int [][]grid= new int[6][7];
+
+    int turn=0;
+
+    public void run()
+    {
+        while(true){
+            System.out.println();
+        System.out.println("Welcome to Connect Four!");
+        String name= readLine("Enter your name: ");
+        System.out.println();
+        readLine("Hello "+ name+"! Hit enter to start the game!");
+        System.out.println();   
+        
+        while(true)
+        {
+            
+            
+            System.out.println("Game Board: X=Player, O=Opponent");
+            System.out.println();
+            printBoard(grid);
+            takeTurn(grid);
+            if(checkWin(grid,1)||checkWin(grid,2))
+            {
+                break;
+            }
+            if(turn==42)
+            {
+                break;
+            }
+        }
+            System.out.println();
+            printBoard(grid);
+        
+            System.out.println();        
+            if(turn==42&&checkWin(grid,1)&&checkWin(grid,2)==false)
+            {
+                System.out.println("The game has resulted in a tie...");
+                System.out.println();
+            }
+            
+            if(checkWin(grid,1)==true||checkWin(grid,2))
+            {
+                if(turn%2==1)
+                {
+                    System.out.println("The player has won the game. WOOOOOO");
+                    System.out.println();
+                }else
+                {
+                    System.out.println("The opponent has won the game. BOOOOOOO");
+                }
+            }
+        
+            String ans="";
+            
+            while (true)
+            {
+                System.out.println();
+                 ans = readLine("Thanks for playing! Would you like to play again ?");
+            
+                if(ans.equalsIgnoreCase("yes")||ans.equalsIgnoreCase("no"))
+                {
+                    break;
+                }else
+                {
+                    System.out.println();
+                    System.out.println("Seriously?");
+                }
+            }
+            
+            if(ans.equalsIgnoreCase("no"))
+            {
+                break;
+            }
+            resetBoard(grid);
+            turn=0;
+        }
+    }
+    
+    private void resetBoard(int[][] grid)
+    {
+        for(int row=0;row<6;row++)
+        {
+            for(int col=0;col<7;col++)
+            {
+                grid[row][col]=0;
+            }
+        }
+    }
+    
+   private void takeTurn(int [][] grid)
+   {
+       
+       System.out.println();
+       if(turn%2==0)
+       {
+           readLine("Hit enter for player turn");
+           System.out.println();
+           int col;
+           while(true)
+           {
+              col = readInt("What col? ");
+              System.out.println();
+               if(grid[0][col-1]==0&&col>0&&col<8)
+               {
+                    break;
+               }else
+               {
+                   System.out.println("Seriously? ");
+               }
+           }
+           
+           recordTurn(grid,"Player",col);
+       }
+       
+       if(turn%2==1)
+       {
+           
+           
+           readLine("Hit enter for opponent turn");
+           System.out.println();
+           System.out.println("Opponent is moving...");
+           System.out.println();
+           readLine("Hit enter to see opponent's move!");
+           System.out.println();
+           int col;
+           while(true)
+       {
+           col= Randomizer.nextInt(0,6);
+           if(grid[0][col]==0)
+           {
+               break;
+           }
+       }
+       
+        recordTurn(grid,"Opponent",col);
+     
+       }
+       
+       turn++;
+   }
+   
+   private void recordTurn(int [][] grid, String turn,int col)
+   {
+       if(turn.equalsIgnoreCase("player"))
+       {
+           for(int row=5;row>-1;row--)
+           {
+               if(grid[row][col-1]==0)
+               {
+                   grid[row][col-1]=2;
+                   break;
+               }
+           }
+       }
+       
+       if(turn.equalsIgnoreCase("opponent"))
+       {
+            for(int row=5;row>-1;row--)
+            {
+                if(grid[row][col]==0)
+                {
+                    grid[row][col]=1;
+                    break;
+                }
+            }
+       }
+   }
+    
+    public boolean checkWin(int[][]grid,int player)
+    {
+        if(checkH(grid,player))
+        {
+            return true;
+        }
+        if(checkV(grid,player))
+        {
+            return true;
+        }
+        if(checkLD(grid,player))
+        {
+            return true;
+        }
+        if(checkRD(grid,player))
+        {
+            return true;
+        }
+     
+     
+        return false;   
+    }
+    
+    public boolean checkH(int [][]grid,int player)
+    {
+        int streak=0;
+        
+        for(int row=0;row<6;row++)
+        {
+            for(int col=0;col<7;col++)
+            {
+                if(grid[row][col]==player)
+                {
+                    streak++;
+                }else
+                {
+                    streak=0;
+                }
+                
+                if(streak==4)
+                {
+                    return true;
+                }
+            }
+            streak=0;
+        }
+        
+        return false;
+    }
+
+    
+    public boolean checkV(int [][] grid, int player)
+    {
+        int streak=0;
+        
+        for(int row=0;row<7;row++)
+        {
+            for(int col=0;col<6;col++)
+            {
+                if(grid[col][row]==player)
+                {
+                    streak++;
+                }
+                else{
+                    streak=0;
+                }
+                
+                if(streak==4)
+                {
+                    return true;
+                }
+            }
+            streak=0;
+        }
+        
+        return false;
+    }
+    
+    public boolean checkLD(int [][] grid, int player )
+    {
+        //there are 6 left facing diagonals to check
+        int s1=0;
+        int j=3;
+        
+        //ld1
+        for(int i=0;i<4;i++)
+        {
+           if(grid[i][j]==player)
+           {
+               s1++;
+               j++;
+           }
+           else
+           {
+               s1=0;
+               j++;
+           }
+           
+           if(s1==4)
+           {
+               return true;
+           }
+        }
+        
+        
+        //ld2
+        
+        int s2=0;
+        int x=2;
+        
+        for(int y=0;y<5;y++)
+        {
+            if(grid[y][x]==player)
+            {
+                s2++;
+                x++;
+            }
+            else
+            {
+                s2=0;
+                x++;
+            }
+            
+            if(s2==4)
+            {
+                return true;
+            }
+        }
+        
+        int s3=0;
+        int z=1;
+        
+        for(int w=0;w<6;w++)
+        {
+            if(grid[w][z]==player)
+            {
+                z++;
+                s3++;
+            }
+            else
+            {
+                s3=0;
+                z++;
+            }
+            
+            if(s3==4)
+            {
+                return true;
+            }
+        }
+        
+        int s4=0;
+        int t=0;
+        
+        for(int l=0;l<6;l++)
+        {
+            if(grid[l][t]==player)
+            {
+                t++;
+                s4++;
+            }
+            else
+            {
+                t++;
+                s4=0;
+            }
+            
+            if(s4==4)
+            {
+                return true;
+            }
+        }
+        
+        int s5=0;
+        int q=0;
+        
+        for(int r=1;r<6;r++)
+        {
+            if(grid[r][q]==player)
+            {
+                s5++;
+            }
+            else
+            {
+                s5=0;
+            }
+            
+            if(s5==4)
+            {
+                return true;
+            }
+            
+            if(q<4)
+            {
+                q++;
+            }
+        }
+        
+        int s6=0;
+        int u=0;
+        
+        for(int e=2;e<6;e++)
+        {
+            if(grid[e][u]==player)
+            {
+                s6++;
+            }
+            else
+            {
+                s6=0;
+            }
+            
+            if(s6==4)
+            {
+                return true;
+            }
+            if(u<3)
+            {
+                u++;
+            }
+        }
+        
+        s1=0;
+        s2=0;
+        s3=0;
+        s4=0;
+        s5=0;
+        s6=0;
+        return false;
+    }
+    
+    public boolean checkRD(int [][] grid, int player)
+    {
+            //      for rd we have to check
+        int s1=0;
+        int j=3;
+        
+        for(int i=0;i<4;i++)
+        {
+            if(grid[i][j]==player)
+            {
+                s1++;
+            }
+            else
+            {
+                s1=0;
+            }
+            
+            if(s1==4)
+            {
+                return true;
+            }
+            
+            if(j>0)
+            {
+                j--;
+            }
+        }
+        
+        int s2=0;
+        int q=4;
+        
+        for(int w=0;w<5;w++)
+        {
+            if(grid[w][q]==player)
+            {
+                s2++;
+            }
+            else
+            {
+                s2=0;
+            }
+            
+            if(s2==4)
+            {
+                return true;
+            }
+            
+            if(q>0)
+            {
+                q--;
+            }
+        }
+        
+        int s3=0;
+        int x=5;
+        
+        for(int y=0;y<6;y++)
+        {
+            if(grid[y][x]==player)
+            {
+                s3++;
+            }
+            else
+            {
+                s3=0;
+            }
+            
+            if(s3==4)
+            {
+                return true;
+            }
+            
+            if(x>0)
+            {
+                x--;
+            }
+        }
+        
+        int s4=0;
+        int u=6;
+        
+        for(int p=0;p<6;p++)
+        {
+            if(grid[p][u]==player)
+            {
+                s4++;
+            }
+            else
+            {
+                s4=0;
+            }
+            
+            if(s4==4)
+            {
+                return true;
+            }
+            if(u>0)
+            {
+                u--;
+            }
+        }
+        
+        int s5=0;
+        int s=6;
+        
+        for(int a=1;a<6;a++)
+        {
+            if(grid[a][s]==player)
+            {
+                s5++;
+            }
+            else
+            {
+                s5=0;
+            }
+            
+            if(s5==4)
+            {
+                return true;
+            }
+            if(s>0)
+            {
+                s--;
+            }
+        }
+        
+        int s6=0;
+        int e=6;
+        
+        for(int d=2;d<6;d++)
+        {
+            if(grid[d][e]==player)
+            {
+                s6++;
+            }
+            else
+            {
+                s6=0;
+            }
+            if(s6==4)
+            {
+                return true;
+            }
+            if(e>0)
+            {
+                e--;
+            }
+        }
+        
+        s1=0;
+        s2=0;
+        s3=0;
+        s4=0;
+        s5=0;
+        s6=0;
+    
+        return false;
+    }
+    
+    private void printBoard(int [][] grid)
+    {
+        System.out.print("  ");
+        for(int i=0;i<7;i++){
+            
+            if(i<9){
+                System.out.print(i+1+" ");
+            }else{
+                System.out.print(i+1);
+                
+            }
+            
+        }
+        System.out.println(" ");
+        
+        
+        
+        
+        
+        for(int row=0;row<6;row++)
+        {
+            System.out.print(row+1+" ");
+            for(int col=0;col<7;col++)
+            {
+                if(grid[row][col]==0)
+                {
+                    System.out.print("- ");
+                }
+                if(grid[row][col]==1)
+                {
+                    System.out.print("O ");
+                }
+                if(grid[row][col]==2)
+                {
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
