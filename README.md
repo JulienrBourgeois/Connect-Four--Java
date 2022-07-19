@@ -5,7 +5,7 @@ Due to the events of hurricane IDA, I was out of school for 2 months. During the
 
 The logic of this app was pretty straight forward. All I had to do was have one player and one computer that take turns throughout the game. The player would be assigned to X's and the Computer would be assigned to O's. I would have to recall this code continously via a while loop until the game was ended. The game could only end if the computer or player won. In winning, the computer or player had to have 4 of their pieces in a row vertically, horizontally or diagonally. 
 
-Now, let's get a little mor in depth with the code!
+Now, let's get a little more in depth with the code!
 
 To start off my program, I had the user enter their name. After that, the program executed the while loop of the game. To start the loop, I made a printBoard function that created a 2D array, iterating through it and setting it's texts to - . This showed the user that the 2D array was empty and the grid was ready to be played on. Next, I asked the user what column they wanted to place their piece on. Because the pieces slide straight down in connect four, I did not have to ask the user what row they wanted to place it in, as the piece would travel down to the lowest available row in that column. In this method, I iterated through the row of the user's selected column from the ground up. The first empty space I found was then filled and the UI was updated. I did the same method in the background with the computer but used a randomizer class to decide which column the piece would be placed on.
 
